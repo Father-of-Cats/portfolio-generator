@@ -1,42 +1,18 @@
-const profileDataArgs = process.argv.slice(2, process.argv.length);
+const fs = require('fs');
+const generatePage = require('./src/page-template');
+
+const profileDataArgs = process.argv.slice(2);
+
 console.log(profileDataArgs);
 
-// Arrow function => essentially creating function without the keyword 'function'
+const [name, github] = profileDataArgs;
 
-// const printProfileData = (profileDataArr) => {
-//   console.log(profileDataArr);
-// };
+console.log(name, github);
 
-// printProfileData(profileDataArgs);
-  
-//   printProfileData(profileDataArgs);
+const pageHTML = generatePage(name, github);
 
+fs.writeFile('./index.html', pageHTML, err => {
+  if (err) throw err;
 
-// const variable examples
-// const animalArray = ['dog', 'cat', 'pig'];
-// animalArray.push('cow');
-// const personObj = {
-//   name: 'Lernantino',
-//   age: 99
-// };
-// personObj.age = 100;
-// personObj.occupation = 'Developer';
-// console.log(animalArray)
-// console.log(personObj)
-
-
-
-// 9.1.6
-// Notice the lack of parentheses around the 'profileDataArr' parameter?
-const printProfileData = profileDataArr => {
-  // this ..
-  for (let i = 0; i < profileDataArr.length; i++) {
-    console.log(profileDataArr[i])
-  }
-console.log('===================')
-
-// is the same as this ...
-profileDataArr.forEach(profileItem => console.log(profileItem));
-};
-// above 'profileItem' is declared within the .forEach()
-printProfileData(profileDataArgs);
+  console.log('Portfolio complete! Check out index.html to see the output!');
+});
